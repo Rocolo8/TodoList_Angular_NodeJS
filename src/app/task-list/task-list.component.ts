@@ -4,16 +4,14 @@ import { ActivatedRoute, Route } from '@angular/router';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.css']
+  styleUrls: ['./task-list.component.css'],
 })
 export class TaskListComponent {
-  tasks: Task[] = [
-    new Task("Go gym"),
-    new Task("Study"),
-    new Task("Meditate")
-  ]
+  tasks: Task[] = [new Task('Go gym'), new Task('Study'), new Task('Meditate')];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {}
+
+  date: Date = new Date(this.route.snapshot.params['date']);
 
   ngOnInit(): void {
     var date: Date = new Date(this.route.snapshot.params['date']);
@@ -21,25 +19,29 @@ export class TaskListComponent {
   }
 
   add(newTask: string) {
-    this.tasks.push(new Task(newTask))
+    this.tasks.push(new Task(newTask));
   }
 
   remove(existingTask: Task) {
-    var userConfirmed = confirm(`Are you sure that you want to remove the following task? \n "${existingTask.title}"`)
+    var userConfirmed = confirm(
+      `Are you sure that you want to remove the following task? \n "${existingTask.title}"`
+    );
     if (userConfirmed) {
-      this.tasks = this.tasks.filter(task => task != existingTask)
+      this.tasks = this.tasks.filter((task) => task != existingTask);
     }
+  }
+
+  showDate() {
+    // var date: Date = new Date(this.route.snapshot.params['date']);
+    return this.date;
   }
 }
 
 class Task {
-  constructor(public title: string) {
-
-  }
-  isDone = false
+  constructor(public title: string) {}
+  isDone = false;
 
   toggleIsDone() {
-    this.isDone = !this.isDone
+    this.isDone = !this.isDone;
   }
 }
-
